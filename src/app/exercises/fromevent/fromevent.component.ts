@@ -10,7 +10,6 @@ export class FromeventComponent {
   currentWidth = 0;
 
   constructor() {
-
     /**
      * Schreibe die jeweils aktuelle Fensterbreite in das Property `this.currentWidth`
      *
@@ -21,11 +20,18 @@ export class FromeventComponent {
 
     /******************************/
 
-    fromEvent(window, 'resize').subscribe(e => {
-      console.log(e)
+    // Declarative, Reactive: Better here processing data
+    const width$ = fromEvent(window, 'resize').pipe(
+      debounceTime(1000),
+      map(() => window.innerWidth),
+      startWith(window.innerWidth)
+    );
+
+    // Imperative
+    width$.subscribe(width => {
+      this.currentWidth = width;
     });
 
     /******************************/
   }
-
 }
