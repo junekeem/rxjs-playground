@@ -6,7 +6,6 @@ import { Observable, of, from, timer, interval, ReplaySubject, map, filter } fro
   templateUrl: './creating.component.html',
 })
 export class CreatingComponent {
-
   logStream$ = new ReplaySubject<string | number>();
 
   constructor() {
@@ -22,35 +21,79 @@ export class CreatingComponent {
 
     /******************************/
 
-    function producer(o: any) {
-      o.next(5);
-      o.next(4);
-      o.next(3);
+    // timer(2000, 500)
+    //   .pipe(
+    //     map(e => e * 3),
+    //     filter(e => e % 2 === 0)
+    //   )
+    //   .subscribe({
+    //     // Never ends alone
+    //     next: e => this.log(e),
+    //     complete: () => this.log('COMPLETE!'),
+    //   });
 
-      setTimeout(()=> {
-        o.next(2);
-      }, 1000);
-
-      setTimeout(()=> {
-        o.error('error');
-      }, 2000);
-    }
-
-    const observer = {
-      next: (e: any) => console.log(e),
-      error: (e: any) => console.error(e),
-      complete: () => console.log('complete')
-    };
-
-    // 2.
-    const myObs$ = new Observable(producer); // $: Finnische Notation - Andre Staltz
-    // same as:
-    // const myObs1$ = new Observable((o) => {
-    //   o.next('demo');
+    // timer(2000).subscribe({ // Never ends alone
+    //   next: e => this.log(e),
+    //   complete: () => this.log('COMPLETE!')
     // });
 
-    // myObs$.subscribe(e => console.log(e), err => console.log(err));
-    myObs$.subscribe(observer);
+    // interval(1000).subscribe({ // Never ends alone
+    //   next: e => this.log(e),
+    //   complete: () => this.log('COMPLETE!')
+    // });
+
+    // const myArr = [1,2,3,4,5];
+    // from(myArr).subscribe({ // Iterate array
+    //   next: e => this.log(e),
+    //   complete: () => this.log('COMPLETE!')
+    // });
+
+    // of('A', 'B', 'C').subscribe({
+    //   next: e => this.log(e),
+    //   complete: () => this.log('COMPLETE!')
+    // });
+
+    // // Possible implementation of 'of':
+    // function myOf(...value: string[]) {
+    //   return new Observable(obs => {
+    //     value.forEach(v => {
+    //       obs.next(v);
+    //     });
+    //     obs.complete();
+    //   })
+    // }
+
+    /******************************/
+
+    // function producer(o: any) {
+    //   o.next(5);
+    //   o.next(4);
+    //   o.next(3);
+
+    //   setTimeout(() => {
+    //     o.next(2);
+    //   }, 1000);
+
+    //   setTimeout(() => {
+    //     o.error('error');
+    //   }, 2000);
+    // }
+
+    // const observer = {
+    //   next: (e: any) => console.log(e),
+    //   error: (e: any) => console.error(e),
+    //   complete: () => console.log('complete'),
+    // };
+
+    // // 2.
+    // const myObs$ = new Observable(producer); // $: Finnische Notation - Andre Staltz
+    // // same as:
+    // // const myObs1$ = new Observable((o) => {
+    // //   o.next('demo');
+    // // });
+
+    // // myObs$.subscribe(e => console.log(e), err => console.log(err));
+    // myObs$.subscribe(observer);
 
     // 1.
     // producer(obs);
@@ -73,5 +116,4 @@ export class CreatingComponent {
   private log(msg: string | number) {
     this.logStream$.next(msg);
   }
-
 }
