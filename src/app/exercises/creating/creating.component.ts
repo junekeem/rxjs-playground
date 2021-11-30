@@ -22,7 +22,51 @@ export class CreatingComponent {
 
     /******************************/
 
-    
+    function producer(o: any) {
+      o.next(5);
+      o.next(4);
+      o.next(3);
+
+      setTimeout(()=> {
+        o.next(2);
+      }, 1000);
+
+      setTimeout(()=> {
+        o.error('error');
+      }, 2000);
+    }
+
+    const observer = {
+      next: (e: any) => console.log(e),
+      error: (e: any) => console.error(e),
+      complete: () => console.log('complete')
+    };
+
+    // 2.
+    const myObs$ = new Observable(producer); // $: Finnische Notation - Andre Staltz
+    // same as:
+    // const myObs1$ = new Observable((o) => {
+    //   o.next('demo');
+    // });
+
+    // myObs$.subscribe(e => console.log(e), err => console.log(err));
+    myObs$.subscribe(observer);
+
+    // 1.
+    // producer(obs);
+
+    // Example:
+    /*
+    class MyObservable {
+      constructor(private producer: any) {}
+
+      subscribe(observer) {
+        const subscriber = this.sanitizeObserver(observer);
+        this.producer(subscriber);
+      }
+    }
+    */
+
     /******************************/
   }
 
