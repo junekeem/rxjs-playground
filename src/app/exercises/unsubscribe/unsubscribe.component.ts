@@ -19,14 +19,23 @@ export class UnsubscribeComponent implements OnDestroy {
    *
    * Es gibt noch weitere Wege, das Problem zu lösen...
    */
+
+  // private sub = new Subscription; // Not recommended
+  private destroy$ = new Subject<void>();
+
   constructor() {
     const interval$ = timer(0, 1000);
 
+    // this.sub = Not recommended
     interval$.pipe(
 
       /******************************/
 
-      
+      // take(n): sets the number of observable from
+      // takeUntil():
+      // takeUntil(timer(4200))
+      takeUntil(this.destroy$)
+
       /******************************/
 
     ).subscribe({
@@ -37,6 +46,9 @@ export class UnsubscribeComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
+    // this.sub.unsubscribe(); // Not recommended
+    this.destroy$.next();
+
     this.logStream$.next('DESTROY');
   }
 
