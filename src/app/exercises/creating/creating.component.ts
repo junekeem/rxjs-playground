@@ -21,34 +21,33 @@ export class CreatingComponent {
 
     /******************************/
 
-    // timer(2000, 500)
+    // timer(2000, 500) // Never ends alone: After 2secs excuted every 0.5sec
     //   .pipe(
     //     map(e => e * 3),
     //     filter(e => e % 2 === 0)
     //   )
     //   .subscribe({
-    //     // Never ends alone
     //     next: e => this.log(e),
     //     complete: () => this.log('COMPLETE!'),
     //   });
 
-    // timer(2000).subscribe({ // Never ends alone
+    // timer(2000).subscribe({ // After 2secs executed once and complete
     //   next: e => this.log(e),
     //   complete: () => this.log('COMPLETE!')
     // });
 
-    // interval(1000).subscribe({ // Never ends alone
+    // interval(1000).subscribe({ // Never ends alone: Repeat every one sec
     //   next: e => this.log(e),
     //   complete: () => this.log('COMPLETE!')
     // });
 
     // const myArr = [1,2,3,4,5];
-    // from(myArr).subscribe({ // Iterate array
+    // from(myArr).subscribe({ // Iterate array and complete
     //   next: e => this.log(e),
     //   complete: () => this.log('COMPLETE!')
     // });
 
-    // of('A', 'B', 'C').subscribe({
+    // of('A', 'B', 'C').subscribe({ // create observable from elemetents and complete: A -> B -> C -> Complete
     //   next: e => this.log(e),
     //   complete: () => this.log('COMPLETE!')
     // });

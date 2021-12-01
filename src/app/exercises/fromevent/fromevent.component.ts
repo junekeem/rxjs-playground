@@ -22,7 +22,7 @@ export class FromeventComponent {
 
     // Declarative, Reactive: Better here processing data
     const width$ = fromEvent(window, 'resize').pipe(
-      debounceTime(1000),
+      debounceTime(1000), // To avoid event burst;
       map(() => window.innerWidth),
       startWith(window.innerWidth)
     );

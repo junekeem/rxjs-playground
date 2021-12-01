@@ -10,6 +10,9 @@ import { ExerciseService } from '../exercise.service';
 })
 export class MulticastComponent {
 
+  // Cold Observable: delivers data only if subscriber exists (lazy); timer(), HttpClient; Unicast
+  // Hot Observable: delivers data even if no subscribers exist; FormControl.valueChanges; Multicast
+
   listeners: string[] = [];
   logStream$ = new ReplaySubject<string>();
 
@@ -26,7 +29,7 @@ export class MulticastComponent {
     // 1. share takes already existing observable and distribute
     // this.measureValues$ = this.mvs.getValues().pipe(share()); // share(): Cold Observable(unicast) to Hot Observable(multicast)
 
-    // 2. Subject just a role as a distributor
+    // 2. Subject just plays a role as a distributor
     // this.measureValues$ = new Subject();
 
     // this.mvs.getValues().subscribe(this.measureValues$);
