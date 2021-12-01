@@ -27,8 +27,65 @@ export class HigherorderComponent {
 
     /**************!!**************/
 
+    /**
+     * Not recommended:
+     */
+    // this.source$.pipe(map(tier => this.es.echo(tier))
+    // ).subscribe(e => {
+    //   e.subscribe(data => {
+
+    //   })
+    // });
+
+    /**
+     * Use: map + merge
+     */
+    // this.result$ = this.source$.pipe(
+    //   map(tier => this.es.echo(tier)),
+    //   mergeAll()
+    // );
+
+    /**
+     *  = mergeMap():
+     *  Maps each value to each other of the observable
+     *  and merges the results (in the order of their occurrence).
+     */
+    // this.result$ = this.source$.pipe(
+    //   mergeMap(tier => this.es.echo(tier))
+    // );
+
+    /**
+     * concatMap():
+     * Maps each value to another observable,
+     * but continues with the next observable only after the previous one is completed.
+     */
+    // this.result$ = this.source$.pipe(
+    //   concatMap(tier => this.es.echo(tier))
+    // );
+
+    /**
+     *  switchMap():
+     *  Maps each value to another observable,
+     *  but terminates the running Subscription as soon as a new value appears in the source stream;
+     *  only the most recent value is important
+     */
+    // this.result$ = this.source$.pipe(
+    //   switchMap(tier => this.es.echo(tier)));
+
+    /**
+     *  exhaustMap():
+     *  Maps each value to another observable,
+     *  but ignores all values from the source stream as long as a subscription is still running.
+     */
     this.result$ = this.source$.pipe(
-    );
+      exhaustMap(tier => this.es.echo(tier)));
+
+    /**
+     * concatMap() → if order is important (slower)
+     * mergeMap() → if order is not important (faster)
+     * switchMap() → if only the last value is interesting (e.g. TypeAhead)
+     * exhaustMap() → if currently running process must be finished, before further proceeding (e.g. login)
+     */
 
     /**************!!**************/
 
