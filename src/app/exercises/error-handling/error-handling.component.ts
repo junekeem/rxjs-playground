@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ReplaySubject, throwError, of, EMPTY, retry, catchError } from 'rxjs';
+import { ReplaySubject, throwError, of, EMPTY, retry, catchError, timer, from, Observable } from 'rxjs';
 
 import { ExerciseService } from '../exercise.service';
 
@@ -22,12 +22,30 @@ export class ErrorHandlingComponent {
    * - Fehler verschlucken/ignorieren
    */
 
+  // TODO: Repeat request
   start() {
     this.es.randomError().pipe(
 
       /******************************/
+      catchError(err => { // as a map, but handle error
+        // Error Handling 1
+        // Throw/Replace error:
+        return throwError(() => 'Error!');
 
-      
+        // Error Handling 2
+        // Set Fallback data (Replace error with normal data):
+        // return of('Nothing', 'happened');
+
+        // Error Handling 3
+        // Ignore error:
+        // return EMPTY;
+        // return of()
+        // return from([]);
+        // return from(Promise.resolve());
+        // return new Observable(obs => (obs));
+      }),
+      retry(3) // more information: https://blog.strongbrew.io/safe-http-calls-with-rxjs/
+
       /******************************/
 
     ).subscribe({
